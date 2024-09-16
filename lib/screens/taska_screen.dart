@@ -1,28 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:todoey/Widgets/tasklist.dart';
+import 'package:todoey/models/task.dart';
 import 'package:todoey/screens/add_taskscreen.dart';
 
-class TasksScreen extends StatelessWidget {
-  const TasksScreen({super.key});
+class TasksScreen extends StatefulWidget {
+  TasksScreen({super.key, this.task});
+  static String routeName = '/tasks';
+  String? task;
+
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task(name: "Buy Milk"),
+    Task(name: "Buy Eggs"),
+    Task(name: "Buy Bread"),
+    Task(name: "Buy Mac B"),
+    Task(name: "Buy Mac B")
+  ];
+
+  void addNewTask(String task) {
+    tasks.add(Task(name: task));
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.task);
     bool checked = false;
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet<void>(
-            isScrollControlled: true,
-            context: context,
-            builder: (context) => SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: const addTask(),
-              ),
-            ),
-          );
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => SingleChildScrollView(
+                      child: Container(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: addTaskScreen((newTaskTitle) {
+                      setState(() {
+                        tasks.add(Task(name: newTaskTitle));
+
+                      
+                      });
+                    }),
+                  )));
         },
         backgroundColor: Colors.lightBlueAccent,
         shape: const CircleBorder(),
@@ -42,10 +67,10 @@ class TasksScreen extends StatelessWidget {
                 bottom: 30.0,
                 left: 30.0,
               ),
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 30.0,
                     child: Icon(
@@ -54,8 +79,8 @@ class TasksScreen extends StatelessWidget {
                       color: Colors.lightBlueAccent,
                     ),
                   ),
-                  SizedBox(height: 10.0),
-                  Text(
+                  const SizedBox(height: 10.0),
+                  const Text(
                     'Todoey',
                     style: TextStyle(
                         color: Colors.white,
@@ -63,8 +88,8 @@ class TasksScreen extends StatelessWidget {
                         fontWeight: FontWeight.w700),
                   ),
                   Text(
-                    "12 Tasks",
-                    style: TextStyle(color: Colors.white),
+                    "${tasks.length} Tasks",
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ],
               ),
@@ -81,7 +106,7 @@ class TasksScreen extends StatelessWidget {
                 child: Container(
                   padding:
                       const EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0),
-                  child: Tasklist(checked: checked),
+                  child: Tasklist(checked: checked, tasksList: tasks),
                 ),
               ),
             )

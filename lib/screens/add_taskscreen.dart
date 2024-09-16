@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:todoey/screens/taska_screen.dart';
 
-class addTask extends StatelessWidget {
-  const addTask({super.key});
+class addTaskScreen extends StatelessWidget {
+  addTaskScreen(this.addNewTask);
 
+  final Function(String) addNewTask;
   @override
   Widget build(BuildContext context) {
+    String newTaskTitle = '';
+
     return Container(
       padding: const EdgeInsets.only(top: 30.0, left: 50.0, right: 50.0),
       child: Column(
@@ -21,20 +25,27 @@ class addTask extends StatelessWidget {
           const SizedBox(
             height: 10.0,
           ),
-          const TextField(
+          TextField(
+            onChanged: (newTask) {
+              newTaskTitle = newTask;
+            },
             autofocus: true,
             textAlign: TextAlign.center,
-            decoration: InputDecoration(hoverColor: Colors.blueAccent),
+            decoration: const InputDecoration(hoverColor: Colors.blueAccent),
           ),
           const SizedBox(
             height: 20.0,
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              print(newTaskTitle);
+              addNewTask(newTaskTitle);
+
+              Navigator.pop(context);
+            },
             style: ButtonStyle(
-              backgroundColor:
-                  const MaterialStatePropertyAll(Colors.blueAccent),
-              shape: MaterialStatePropertyAll(
+              backgroundColor: const WidgetStatePropertyAll(Colors.blueAccent),
+              shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
