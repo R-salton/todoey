@@ -17,22 +17,21 @@ class Tasklist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<GetTask>(
-      builder: (context, taskData,child){
-return ListView.builder(
-        itemBuilder: (context, index) {
-          return Tasktile(
-              taskTitle: taskData.gettasks[index].name,
-              isChecked: taskData.gettasks[index].isDone,
-              checkBoxCallback: (checkBoxState) {
-                // setState(() {
-                //   Provider.of(context).tasksList[index].toggleDone();
-                // });
-              });
-        },
-        itemCount: taskData.getTaskNumber,
-      );
+      builder: (context, taskData, child) {
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return Tasktile(
+                longPressCallback: () =>
+                    taskData.deleteTask(taskData.gettasks[index]),
+                taskTitle: taskData.gettasks[index].name,
+                isChecked: taskData.gettasks[index].isDone,
+                checkBoxCallback: (checkBoxState) {
+                  taskData.updateTask(taskData.gettasks[index]);
+                });
+          },
+          itemCount: taskData.getTaskNumber,
+        );
       },
-      
     );
   }
 }

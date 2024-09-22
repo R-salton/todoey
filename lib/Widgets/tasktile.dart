@@ -6,15 +6,18 @@ class Tasktile extends StatelessWidget {
   final bool isChecked;
   final String taskTitle;
   final Function(bool?) checkBoxCallback;
+  final Function()? longPressCallback;
   const Tasktile(
       {super.key,
       required this.taskTitle,
       required this.isChecked,
-      required this.checkBoxCallback});
+      required this.checkBoxCallback
+      ,required this.longPressCallback});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+     onLongPress: longPressCallback,
       title: Text(
         taskTitle,
         style: TextStyle(
@@ -30,17 +33,3 @@ class Tasktile extends StatelessWidget {
   }
 }
 
-// class taskCheckBox extends StatelessWidget {
-//   final bool checkBoxState;
-//   final Function(bool?) toggleCheckBox;
-//   // ignore: prefer_const_constructors_in_immutables
-//   taskCheckBox(
-//       {required this.checkBoxState, required this.toggleCheckBox, super.key});
-//   @override
-//   Widget build(BuildContext context) {
-//     return Checkbox(
-//         activeColor: Colors.blueAccent,
-//         value: checkBoxState,
-//         onChanged: toggleCheckBox);
-//   }
-// }
