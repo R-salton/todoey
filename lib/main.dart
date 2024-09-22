@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoey/models/task.dart';
 import 'package:todoey/models/task_data.dart';
 import 'package:todoey/screens/taska_screen.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +15,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => GetTask(),
-      child:
-          MaterialApp(debugShowCheckedModeBanner: false, home: TasksScreen()),
+      child: ChangeNotifierProvider(
+        create: (context) => GetTask(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: TasksScreen(),
+        ),
+      ),
     );
   }
 }
+

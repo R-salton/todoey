@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/models/task.dart';
-
+import 'dart:collection';
 
 class GetTask extends ChangeNotifier {
-  List<Task> tasks = [
+  List<Task> _tasks = [
     Task(name: "Buy Milk"),
     Task(name: "Buy Eggs"),
     Task(name: "Buy Bread"),
@@ -12,11 +12,19 @@ class GetTask extends ChangeNotifier {
     Task(name: "Buy Mac B")
   ];
 
-  List getTasks() {
-    return tasks;
-  }
+UnmodifiableListView<Task> get gettasks {
+  return UnmodifiableListView(_tasks);
+}
+  
 
   void addNewTask(String task) {
-    tasks.add(Task(name: task));
+    _tasks.add(Task(name: task));
+    notifyListeners(); 
+  }
+
+
+
+  int get getTaskNumber {
+    return _tasks.length;
   }
 }
